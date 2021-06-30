@@ -3,6 +3,8 @@ package it.polito.tdp.PremierLeague.model;
 public class Player {
 	Integer playerID;
 	String name;
+	public int tempogiocato;
+	public int idSquadra;
 	
 	public Player(Integer playerID, String name) {
 		super();

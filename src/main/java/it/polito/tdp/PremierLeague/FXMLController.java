@@ -5,9 +5,12 @@
 package it.polito.tdp.PremierLeague;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.PremierLeague.model.Battuti;
 import it.polito.tdp.PremierLeague.model.Model;
+import it.polito.tdp.PremierLeague.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,16 +47,47 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	txtResult.clear();
+    	double media=0.0;
+    	String sMedia=txtGoals.getText();
+    	try {media=Double.parseDouble(sMedia);}catch(NumberFormatException e) {
+    		txtResult.setText("deve essre un numero");
+    		return;
+    	}
+    	model.creaGrafo(media);
+    	txtResult.appendText("grafo creato \n");
+    	txtResult.appendText("i vertici sono  "+model.getNVertici()+"\n");
+    	txtResult.appendText("gli archi sono  "+model.getNArchi()+"\n");
 
     }
 
     @FXML
     void doDreamTeam(ActionEvent event) {
+    	txtResult.clear();
+    	
 
     }
 
     @FXML
     void doTopPlayer(ActionEvent event) {
+    	txtResult.clear();
+    	 if(model.getGrafo()==null) {
+     		txtResult.setText("devi prima creare un grafo");
+     		return;
+     	}
+    	 Player best=model.best();
+    	 if(best==null) {
+    		 txtResult.appendText("non ci sono giocatori");
+    		 return;
+    	 }
+    	 txtResult.appendText("TOP PLAYER: "+best.toString()+"\n\n");
+    	 List<Battuti>stampa=model.battuti(best);
+    	 if(stampa.isEmpty()) {
+    		 txtResult.appendText("non ha battuto nessuno");
+    		 return;
+    	 }
+    	for(Battuti b:stampa)
+    		txtResult.appendText(b.toString()+"\n");
 
     }
 
